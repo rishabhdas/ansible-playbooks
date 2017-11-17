@@ -1,0 +1,7 @@
+# Jenkins stable fedora/redhat repo
+
+jenkins_dest: /var/lib/jenkins
+
+jenkins:
+    repo: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+    repo_key: http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key

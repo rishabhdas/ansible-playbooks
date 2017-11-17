@@ -1,0 +1,17 @@
+---
+- name: Remove existing motd file
+  file:
+    path: /etc/motd
+    state: absent
+
+- name: Set custom CLI banner
+  copy:
+    src: motd
+    dest: /etc/motd
+    mode: 0644
+
+- name: Install common packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ packages }}"

@@ -1,0 +1,39 @@
+---
+- name: Add Require Jenkins Repos
+  get_url: 
+    url: "{{ jenkins.repo }}" 
+    dest: /etc/yum.repos.d
+  register: result
+
+- name: Add Jenkins Repo Key
+  command: rpm --import {{ jenkins.repo_key }}
+  when: result|changed
+
+- name: Clean Metadata
+  command: yum clean all
+  when: result|changed
+
+- name: Remove existing java-openjdk installation
+  yum:
+    name: java-openjdk
+    state: removed
+
+- name: Install Required Packages
+  yum: 
+    name: "{{ item }}"
+    state: installed
+  with_items:
+      - git
+      - java-1.8.0-openjdk
+      - wget
+      - jenkins  
+
+- name: Start Jenkins Service
+  service: 
+    name: jenkins
+    state: restarted
+
+- name: Enable Jenkins Service
+  service:
+    name: jenkins 
+    enabled: yes
