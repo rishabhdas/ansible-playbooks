@@ -1,0 +1,32 @@
+---
+- name: Include nginx for Amazon Linux
+  include: rpm.yaml
+  when: ansible_distribution == 'Amazon'
+ 
+- name: Enable nginx service at startup
+  become: true
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Clean Nginx default config
+  become: true
+  file:
+    path: /etc/nginx/nginx.conf
+    state: absent
+
+- name: Copy nginx.conf
+  become: true
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+
+- name: Create / Edit backend configuration for Nginx
+  become: true
+  template:
+    src: proxy_pass.j2 
+    dest: "/etc/nginx/conf.d/{{ item.config_name }}.conf"
+  with_items: "{{ saliux_proxy_pass }}"
+  notify: Restart nginx 

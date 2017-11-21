@@ -1,0 +1,24 @@
+---
+- name: Install HTTPD
+  yum:
+    name: httpd
+    state: installed
+
+- name: Enable HTTPD at startup
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Ensure index.html does not exist
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
+- name: Copy index.html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  notify: Restart httpd
+  tags:
+    - update

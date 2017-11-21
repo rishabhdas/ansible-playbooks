@@ -1,0 +1,8 @@
+# Backend webservers
+
+saliux_proxy_pass:
+  - config_name: saliux
+    endpoint_name: saliux
+    endpoints:
+      - # endpoint-1
+      - # endpoint-n

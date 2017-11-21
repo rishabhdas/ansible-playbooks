@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+upstream {{ item.endpoint_name }} {
+    {% for endpoint in item.endpoints %}
+    server {{ endpoint }};
+    {% endfor %}
+}
+
+server {
+    listen 80;
+    server_name {{ item.endpoint_name }};
+    location / {
+        proxy_pass         http://{{ item.endpoint_name }};
+    }
+}

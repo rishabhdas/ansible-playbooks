@@ -1,0 +1,11 @@
+---
+- hosts: webservers
+  user: ec2-user
+  become: true
+  gather_facts: false
+
+  vars:
+    username: 'Saliux'
+ 
+  roles:
+    - webapp

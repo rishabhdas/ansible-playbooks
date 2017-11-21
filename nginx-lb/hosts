@@ -1,0 +1,8 @@
+[nginx]
+# Nginx IP
+
+[webservers]
+#Webserv IP
+
+[bastion]
+# Bastion IP
