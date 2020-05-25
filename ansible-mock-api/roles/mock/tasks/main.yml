@@ -11,9 +11,6 @@
   set_fact:
     repos: '{% if mock_mode|d(False) %}{{ mock_get_projects }}{% else %}{{ user_repos }}{% endif %}'
 
-# - debug: 
-#     var: repos.json
-
 - debug: 
     msg: "{{ item.name }}"
   with_items:
