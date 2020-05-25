@@ -1,0 +1,3 @@
+mock_get_projects:
+  json:
+    - name: 'mock-project'
